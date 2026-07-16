@@ -655,6 +655,9 @@ public class Player : IEntityAutoReset
 
     public int GainJobExp(int exp)
     {
+        // DARO: Remove job exp 
+        exp = 0;
+
         var level = GetData(PlayerStat.JobLevel);
         var job = GetData(PlayerStat.Job);
         var levelCap = job == 0 ? 10 : 50;
