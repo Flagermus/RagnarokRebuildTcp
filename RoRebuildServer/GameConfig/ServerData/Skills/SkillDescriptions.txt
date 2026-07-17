@@ -16,8 +16,10 @@ Heal's yourself by either 5 HP or 2% of your max HP, whichever is higher.
 //----------------Swordsman-------------------
 
 ::Bash
-Strikes a target for [100 + SkillLevel * 30]% ATK with a +[SkillLevel * 5]% chance to hit.
-SP cost increases from 8 to 15 at level 6 and above.
+Strikes a target for [150/300/400]% ATK damage (based on level). Grants Momentum for 5s, empowering the next follow-up skill.
+At level 3, has a 25% chance to stun the target for 1.5s.
+SP Cost: 8/8/15
+Cooldown: 3s
 
 ::Endure
 Resists flinching from enemy attacks, allowing you to escape without being slowed down by damage. Provides +[SkillLevel] MDEF while active.

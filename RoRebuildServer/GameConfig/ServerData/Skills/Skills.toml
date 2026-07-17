@@ -23,11 +23,11 @@ SpCost = [4]
 [Bash]
 Icon = "sm_bash"
 Target = "Enemy"
-MaxLevel = 10
-SpCost = [8,8,8,8,8,15,15,15,15,15]
+MaxLevel = 3
+SpCost = [8,8,15]
 AdjustableLevel = true
-DescEn = "Strikes a target for <1>% ATK with a +<2>% chance to hit."
-Params = [[130,160,190,220,250,280,310,340,370,400],[5,10,15,20,25,30,35,40,45,50]]
+DescEn = "Strikes a target for <1>% ATK damage. Grants Momentum for 5s, empowering the next follow-up skill. At level 3, has a 25% chance to stun the target for 1.5s.<br><br>Cooldown: 3s"
+Params = [[150,300,400]]
 
 [Endure]
 Icon = "sm_endure"

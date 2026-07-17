@@ -135,6 +135,12 @@ Icon = "icon02"
 CanDispel = true
 CanDisable = true
 
+[Momentum]
+Name = "Momentum"
+Type = "Buff"
+CanDispel = true
+CanDisable = true
+
 [Pneuma]
 Name = "Pneuma"
 Type = "Buff"
