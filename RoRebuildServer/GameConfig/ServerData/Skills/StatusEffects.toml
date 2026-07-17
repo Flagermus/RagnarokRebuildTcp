@@ -138,6 +138,7 @@ CanDisable = true
 [Momentum]
 Name = "Momentum"
 Type = "Buff"
+Icon = "블레싱"
 CanDispel = true
 CanDisable = true
 
