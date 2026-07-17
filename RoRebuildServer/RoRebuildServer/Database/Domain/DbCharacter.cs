@@ -28,6 +28,7 @@ public class DbCharacter
     public int ItemDataLength { get; set; }
     public int? PartyId { get; set; }
     public int AccountId { get; set; }
+    public bool IsSoftDeleted { get; set; }
     public int VersionFormat { get; set; }
     public DbParty? Party { get; set; }
     public DbParty? OwnedParty { get; set; }

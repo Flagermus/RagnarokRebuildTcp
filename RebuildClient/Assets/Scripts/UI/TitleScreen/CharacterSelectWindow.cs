@@ -192,5 +192,21 @@ namespace Assets.Scripts.UI.TitleScreen
             }
 
         }
+
+        public void DeleteSelectedCharacter()
+        {
+            var summary = summaries[selectedSlot];
+            if (summary == null)
+                return;
+
+            NetworkManager.Instance.SendDeleteCharacterMessage(summary.Name, selectedSlot);
+        }
+
+        public void OnCharacterDeleted(int slot)
+        {
+            summaries[slot] = null;
+            CharacterSlots[slot].PrepareEmptySlot(slot == selectedSlot);
+            SetCharacterInfo(selectedSlot);
+        }
     }
 }

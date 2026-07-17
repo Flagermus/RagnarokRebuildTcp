@@ -106,6 +106,7 @@ public enum PacketType : byte
 
     MemoMapLocation,
     DeleteCharacter,
+    [ServerOnlyPacket] DeleteCharacterResult,
 
     AdminCharacterAction,
     ChangePlayerSpecialActionState,

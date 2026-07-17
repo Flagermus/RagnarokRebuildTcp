@@ -339,6 +339,9 @@ namespace Assets.Scripts.Network
                 case PacketType.ErrorMessage:
                     Dispatcher.RunOnMainThread(() => TitleScreen.ErrorMessage(msg.ReadString()));
                     break;
+                case PacketType.DeleteCharacterResult:
+                    InboundMessages.Enqueue(new ClientInboundMessage(bytes, bytes.Length));
+                    break;
                 default:
                     Debug.LogWarning($"Unhandled packet type {type} in LoginScreenMessageHandler");
                     break;
@@ -2044,6 +2047,17 @@ namespace Assets.Scripts.Network
             for (var i = 0; i < 6; i++)
                 msg.Write((byte)stats[i]);
             msg.Write(isMale);
+
+            SendMessage(msg);
+        }
+
+        public void SendDeleteCharacterMessage(string chName, int slot)
+        {
+            var msg = StartMessage();
+
+            msg.Write((byte)PacketType.DeleteCharacter);
+            msg.Write(slot);
+            msg.Write(chName);
 
             SendMessage(msg);
         }

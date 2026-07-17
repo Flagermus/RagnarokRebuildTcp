@@ -1,4 +1,6 @@
 ﻿using RebuildSharedData.Networking;
+using RoRebuildServer.Database;
+using RoRebuildServer.Database.Requests;
 
 namespace RoRebuildServer.Networking.PacketHandlers.Connection;
 
@@ -9,5 +11,10 @@ public class PacketDeleteCharacter : IClientPacketHandler
     {
         if (connection.Character != null)
             return;
+
+        var slot = msg.ReadInt32();
+        var name = msg.ReadString();
+
+        RoDatabase.EnqueueDbRequest(new DeleteCharacterRequest(connection, name, slot));
     }
 }

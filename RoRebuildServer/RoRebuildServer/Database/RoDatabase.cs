@@ -177,7 +177,7 @@ public static class RoDatabase
         using var scope = scopeFactory.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<RoContext>();
 
-        var characters = await db.Character.AsNoTracking().Where(c => c.AccountId == accountId)
+        var characters = await db.Character.AsNoTracking().Where(c => c.AccountId == accountId && !c.IsSoftDeleted)
             .Select(c => new QueryPlayerSummary() { Name = c.Name, Map = c.Map, CharacterSlot = c.CharacterSlot, SummaryData = c.CharacterSummary })
             .ToListAsync();
 

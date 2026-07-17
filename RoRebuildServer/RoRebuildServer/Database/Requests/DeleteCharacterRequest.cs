@@ -1,4 +1,6 @@
-﻿using RoRebuildServer.Networking;
+﻿using Microsoft.EntityFrameworkCore;
+using RebuildSharedData.Networking;
+using RoRebuildServer.Networking;
 
 namespace RoRebuildServer.Database.Requests
 {
@@ -15,9 +17,21 @@ namespace RoRebuildServer.Database.Requests
             this.slotId = slotId;
         }
 
-        public Task ExecuteAsync(RoContext dbContext)
+        public async Task ExecuteAsync(RoContext dbContext)
         {
-            throw new NotImplementedException();
+            var rows = await dbContext.Character
+                .Where(c => c.AccountId == connection.AccountId
+                         && c.CharacterSlot == slotId
+                         && c.Name == deleteName)
+                .ExecuteDeleteAsync();
+
+            var success = rows > 0;
+
+            var packet = NetworkManager.StartPacket(PacketType.DeleteCharacterResult, 8);
+            packet.Write(success);
+            packet.Write(slotId);
+
+            NetworkManager.SendMessage(packet, connection);
         }
     }
 }

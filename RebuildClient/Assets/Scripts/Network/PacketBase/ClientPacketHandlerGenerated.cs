@@ -15,7 +15,7 @@ namespace Assets.Scripts.Network.PacketBase
 	{
 		static ClientPacketHandler()
 		{
-			handlers = new ClientPacketHandlerBase[113];
+			handlers = new ClientPacketHandlerBase[114];
 			handlers[0] = new PacketOnConnectionApproved(); //ConnectionApproved
 			handlers[1] = new InvalidPacket(); //ConnectionDenied
 			handlers[2] = new InvalidPacket(); //PlayerReady
@@ -112,23 +112,24 @@ namespace Assets.Scripts.Network.PacketBase
 			handlers[93] = new InvalidPacket(); //DebugEntry
 			handlers[94] = new PacketMemoMapLocation(); //MemoMapLocation
 			handlers[95] = new InvalidPacket(); //DeleteCharacter
-			handlers[96] = new InvalidPacket(); //AdminCharacterAction
-			handlers[97] = new PacketChangePlayerSpecialActionState(); //ChangePlayerSpecialActionState
-			handlers[98] = new PacketRefreshGrantedSkills(); //RefreshGrantedSkills
-			handlers[99] = new InvalidPacket(); //CreateParty
-			handlers[100] = new PacketInvitePartyMember(); //InvitePartyMember
-			handlers[101] = new PacketAcceptPartyInvite(); //AcceptPartyInvite
-			handlers[102] = new PacketUpdateParty(); //UpdateParty
-			handlers[103] = new PacketNotifyPlayerPartyChange(); //NotifyPlayerPartyChange
-			handlers[104] = new PacketSkillWithMaskedArea(); //SkillWithMaskedArea
-			handlers[105] = new PacketStartVending(); //VendingStart
-			handlers[106] = new PacketVendingStop(); //VendingStop
-			handlers[107] = new PacketVendingStoreView(); //VendingViewStore
-			handlers[108] = new PacketVendingNotifyOfSale(); //VendingNotifyOfSale
-			handlers[109] = new InvalidPacket(); //VendingPurchaseFromStore
-			handlers[110] = new InvalidPacket(); //StartWalkInDirection
-			handlers[111] = new PacketResetMotion(); //ResetMotion
-			handlers[112] = new PacketToggleActivatedState(); //ToggleActivatedState
+			handlers[96] = new PacketDeleteCharacterResult(); //DeleteCharacterResult
+			handlers[97] = new InvalidPacket(); //AdminCharacterAction
+			handlers[98] = new PacketChangePlayerSpecialActionState(); //ChangePlayerSpecialActionState
+			handlers[99] = new PacketRefreshGrantedSkills(); //RefreshGrantedSkills
+			handlers[100] = new InvalidPacket(); //CreateParty
+			handlers[101] = new PacketInvitePartyMember(); //InvitePartyMember
+			handlers[102] = new PacketAcceptPartyInvite(); //AcceptPartyInvite
+			handlers[103] = new PacketUpdateParty(); //UpdateParty
+			handlers[104] = new PacketNotifyPlayerPartyChange(); //NotifyPlayerPartyChange
+			handlers[105] = new PacketSkillWithMaskedArea(); //SkillWithMaskedArea
+			handlers[106] = new PacketStartVending(); //VendingStart
+			handlers[107] = new PacketVendingStop(); //VendingStop
+			handlers[108] = new PacketVendingStoreView(); //VendingViewStore
+			handlers[109] = new PacketVendingNotifyOfSale(); //VendingNotifyOfSale
+			handlers[110] = new InvalidPacket(); //VendingPurchaseFromStore
+			handlers[111] = new InvalidPacket(); //StartWalkInDirection
+			handlers[112] = new PacketResetMotion(); //ResetMotion
+			handlers[113] = new PacketToggleActivatedState(); //ToggleActivatedState
 		}
 	}
 }
