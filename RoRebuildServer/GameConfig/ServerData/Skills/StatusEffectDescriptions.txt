@@ -64,8 +64,8 @@ Your AGI and DEX are increased.
 ::Endure
 You are able to receive damage without flinching and have increased MDEF.
 
-::MagnumBreak
-Your strikes will deal extra fire property damage.
+::MagnumBreakAtkBuff
+Increases ATK by 50 for 15 seconds.
 
 ::Pneuma
 You are protected from ranged physical attacks.

@@ -128,15 +128,15 @@ Icon = "인듀어"
 CanDispel = true
 CanDisable = true
 
-[MagnumBreak]
-Name = "Magnum Break"
+[Momentum]
+Name = "Momentum"
 Type = "Buff"
-Icon = "icon02"
+Icon = "블레싱"
 CanDispel = true
 CanDisable = true
 
-[Momentum]
-Name = "Momentum"
+[MagnumBreakAtkBuff]
+Name = "Magnum Break"
 Type = "Buff"
 Icon = "블레싱"
 CanDispel = true

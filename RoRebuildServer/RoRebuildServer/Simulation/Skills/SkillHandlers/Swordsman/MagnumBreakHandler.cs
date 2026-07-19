@@ -21,7 +21,7 @@ public class MagnumBreakHandler : SkillHandlerBase
 
         map.AddVisiblePlayersAsPacketRecipients(source.Character);
 
-        var blastDistance = 2;
+        var blastDistance = lvl >= 3 ? 3 : 2;
         var hitBonus = 100 + lvl * 10;
         if (source.Character.Type == CharacterType.Monster && lvl > 10)
         {
@@ -29,10 +29,18 @@ public class MagnumBreakHandler : SkillHandlerBase
             hitBonus += 50;
         }
 
+        var attackMultiplier = lvl switch
+        {
+            1 => 1.5f,
+            2 => 2.25f,
+            _ => 3.0f
+        };
+        var element = AttackElement.None;
+
         using var targetList = EntityListPool.Get();
         map.GatherEnemiesInArea(source.Character, source.Character.Position, blastDistance, targetList, true, true);
 
-        var attack = new AttackRequest(CharacterSkill.MagnumBreak, 1 + 0.2f * lvl, 1, AttackFlags.Physical, AttackElement.Fire);
+        var attack = new AttackRequest(CharacterSkill.MagnumBreak, attackMultiplier, 1, AttackFlags.Physical, element);
         attack.AccuracyRatio = hitBonus;
 
         foreach (var e in targetList)
@@ -52,9 +60,9 @@ public class MagnumBreakHandler : SkillHandlerBase
             CommandBuilder.AttackMulti(source.Character, blastTarget, res, false);
         }
 
-        if (source.Character.Type == CharacterType.Player)
+        if (lvl >= 3 && source.Character.Type == CharacterType.Player)
         {
-            var status = StatusEffectState.NewStatusEffect(CharacterStatusEffect.MagnumBreak, 20, lvl);
+            var status = StatusEffectState.NewStatusEffect(CharacterStatusEffect.MagnumBreakAtkBuff, 15f, 50);
             source.AddStatusEffect(status);
         }
 

@@ -51,12 +51,13 @@ Params = [[5,10,15,20,25,30,35,40,45,50],[0.2,0.4,0.6,0.8,1,1.2,1.4,1.6,1.8,2],[
 Name = "Magnum Break"
 Icon = "sm_magnum"
 Target = "Self"
-MaxLevel = 10
-SpCost = [30,30,30,30,30,30,30,30,30,30]
+MaxLevel = 3
+SpCost = [30,30,30]
 AdjustableLevel = false
-DescEn = """Inflicts <1>% fire damage to nearby enemies and knocking them back 2 tiles.
-For 20 seconds after using the skill all physical attacks will all deal an additional <2>% fire damage."""
-Params = [[120,140,160,180,200,220,240,260,280,300],[11,12,13,14,15,16,17,18,19,20]]
+DescEn = """Inflicts a centered non-elemental AOE attack dealing <1>% ATK damage and knocking enemies back 2 tiles.
+Area of effect: 5x5 at levels 1-2, 7x7 at level 3.
+At level 3, grants +50 ATK for 10 seconds."""
+Params = [[150,225,300]]
 
 [Provoke]
 Icon = "sm_provoke"

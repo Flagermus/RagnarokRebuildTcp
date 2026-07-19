@@ -29,8 +29,9 @@ Lasts [SkillLevel + 2] hits or [7 + SkillLevel * 3] seconds, whichever ends firs
 Adds a heal over time effect that recovers [SkillLevel * 5] HP plus [SkillLevel * 0.2]% of your MaxHP per level every 6 seconds. Additionally increases the effectiveness of healing items by 10% per level.
 
 ::MagnumBreak
-Inflicts [100 + SkillLevel * 20]% fire damage to nearby enemies and knocking them back 2 tiles.
-For 20 seconds after using the skill all physical attacks will all deal an additional [10 + SkillLevel]% fire damage.
+Inflicts a centered AOE attack dealing [150/225/300]% ATK damage and knocking enemies back 2 tiles.
+Area of effect is 5x5 at levels 1-2, 7x7 at level 3.
+At level 3, grants +50 ATK for 15 seconds.
 
 ::Provoke
 Enrages an enemy by taunting them, causing them drop their guard for 30 seconds.
