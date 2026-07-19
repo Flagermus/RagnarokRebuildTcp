@@ -15,7 +15,7 @@ IncreasedHPRecovery = []
 Bash = []
 MagnumBreak = [["Bash", 1]]
 Provoke = []
-Endure = [["Provoke", 5]]
+Endure = [["Provoke", 1]]
 ChargeAttack = [["Bash", 7], ["MagnumBreak", 3]]
 #TwoHandQuicken = [["TwoHandSwordMastery", 10], ["Endure", 5]] #just for testing
 

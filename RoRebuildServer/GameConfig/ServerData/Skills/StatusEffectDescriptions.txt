@@ -29,10 +29,13 @@ Your skin is rapidly being encased in stone, lowering your agi, dex, move speed 
 Encased in stone, you are unable to perform actions and are vulnerable to fire. Lowers DEF and increases MDEF. The next hit you take will deal extra damage but end this effect.
 
 ::Provoke
-You are enraged, making you stronger but greatly lowering your defense.
+You are enraged, lowering your defense but increasing your attack power.
 
 ::ProvokeNoAtk
 You are enraged, greatly lowering your defense.
+
+::ProvokeHaste
+Your movement speed is increased when provoke an enermy.
 
 ::Hallucination
 Hallucinations are distorting your vision and making it hard to gauge how much damage you are taking.

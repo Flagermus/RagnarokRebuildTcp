@@ -62,13 +62,12 @@ Params = [[150,225,300]]
 [Provoke]
 Icon = "sm_provoke"
 Target = "Enemy"
-MaxLevel = 10
-SpCost = [5,5,5,5,5,5,5,5,5,5]
-DescEn = """Enrages an enemy by taunting them, causing them drop their guard for 30 seconds.
-Reduces defense by <1>% but increases attack by <2>%.
-The effectiveness of this skill is halved on boss type monsters.
-While provoked the enemy has a low chance of dealing extra damage against you specifically."""
-Params = [[10,15,20,25,30,35,40,45,50,55],[5,10,15,20,25,30,35,40,45,50]]
+MaxLevel = 3
+SpCost = [5,5,5]
+DescEn = """Taunts a single target and forces their attention onto you.
+At level 2, also decreases the target's DEF by 10% but increases their ATK by 10% for 30 seconds.
+At level 3, also increases your Movement Speed by 5% for 10 seconds."""
+Params = [[10],[10]]
 
 [SwordMastery]
 Name = "Sword Mastery"

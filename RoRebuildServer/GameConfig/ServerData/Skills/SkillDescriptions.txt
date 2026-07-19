@@ -34,10 +34,9 @@ Area of effect is 5x5 at levels 1-2, 7x7 at level 3.
 At level 3, grants +50 ATK for 15 seconds.
 
 ::Provoke
-Enrages an enemy by taunting them, causing them drop their guard for 30 seconds.
-Reduces enemy defense by [5 + SkillLevel * 5]%.
-Attacks dealt by the enemy will deal [2 + SkillLevel * 2]% more damage, doubled against the user of provoke.
-The effectiveness of this skill is halved on boss type monsters.
+Taunts a single target, forcing their attention onto you.
+At level 2, decreases the target's DEF by 10% but increases their ATK by 10% for 30 seconds.
+At level 3, also increases your Movement Speed by 5% for 10 seconds.
 
 ::SwordMastery
 Adds +[SkillLevel * 4] weapon attack power when using a dagger or one-handed sword.
