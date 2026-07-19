@@ -65,7 +65,7 @@ Holy light has weakened your defenses.
 Your AGI and DEX are increased.
 
 ::Endure
-You are able to receive damage without flinching and have increased MDEF.
+You are able to receive damage without flinching.
 
 ::MagnumBreakAtkBuff
 Increases ATK by 50 for 15 seconds.

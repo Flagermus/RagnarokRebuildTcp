@@ -12,17 +12,15 @@ public class EndureHandler : SkillHandlerBase
     public override void Process(CombatEntity source, CombatEntity? target, Position position, int lvl, bool isIndirect,
         bool isItemSource)
     {
-        if (!source.TryGetStatusContainer(out var s)
-            || !s.TryGetExistingStatus(CharacterStatusEffect.Endure, out var existing)
-            || existing.Value1 <= 2 + lvl)
-        {
-            //val1 is hit count, val2 is mdef increase
-            var status = StatusEffectState.NewStatusEffect(CharacterStatusEffect.Endure, 7f + lvl * 3f, 2 + lvl, lvl);
-            source.AddStatusEffect(status);
-        }
+        var status = StatusEffectState.NewStatusEffect(CharacterStatusEffect.Endure, 4f);
+        source.AddStatusEffect(status);
 
         if (!isIndirect)
+        {
             source.ApplyCooldownForSupportSkillAction();
+            if (source.Character.Type == CharacterType.Player)
+                source.Player.SetSkillSpecificCooldown(CharacterSkill.Endure, 10f);
+        }
 
         CommandBuilder.SkillExecuteSelfTargetedSkillAutoVis(source.Character, CharacterSkill.Endure, lvl, isIndirect);
     }

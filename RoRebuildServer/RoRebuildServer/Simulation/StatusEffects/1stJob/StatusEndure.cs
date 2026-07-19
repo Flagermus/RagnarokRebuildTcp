@@ -1,5 +1,4 @@
 ﻿using RebuildSharedData.Enum;
-using RebuildSharedData.Enum.EntityStats;
 using RoRebuildServer.EntityComponents;
 using RoRebuildServer.EntityComponents.Character;
 using RoRebuildServer.Simulation.StatusEffects.Setup;
@@ -16,21 +15,6 @@ public class StatusEndure : StatusEffectBase
         if (info.Result != AttackResult.NormalDamage && info.Result != AttackResult.CriticalDamage)
             return StatusUpdateResult.Continue;
         info.Flags |= DamageApplicationFlags.NoHitLock;
-        if (state.Value1 >= 9999)
-            return StatusUpdateResult.Continue;
-        state.Value1--;
-        if (state.Value1 <= 0 && ch.Character.Type != CharacterType.Monster)
-            return StatusUpdateResult.EndStatus;
         return StatusUpdateResult.Continue;
-    }
-
-    public override void OnApply(CombatEntity ch, ref StatusEffectState state)
-    {
-        ch.AddStat(CharacterStat.AddMDef, state.Value2);
-    }
-
-    public override void OnExpiration(CombatEntity ch, ref StatusEffectState state)
-    {
-        ch.SubStat(CharacterStat.AddMDef, state.Value2);
     }
 }

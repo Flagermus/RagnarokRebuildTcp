@@ -22,8 +22,7 @@ SP Cost: 8/8/15
 Cooldown: 3s
 
 ::Endure
-Resists flinching from enemy attacks, allowing you to escape without being slowed down by damage. Provides +[SkillLevel] MDEF while active.
-Lasts [SkillLevel + 2] hits or [7 + SkillLevel * 3] seconds, whichever ends first.
+Resists flinching from enemy attacks for 4 seconds, allowing you to escape without being slowed down by damage. Cooldown: 10s.
 
 ::IncreasedHPRecovery
 Adds a heal over time effect that recovers [SkillLevel * 5] HP plus [SkillLevel * 0.2]% of your MaxHP per level every 6 seconds. Additionally increases the effectiveness of healing items by 10% per level.

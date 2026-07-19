@@ -32,11 +32,10 @@ Params = [[150,300,400]]
 [Endure]
 Icon = "sm_endure"
 Target = "Self"
-MaxLevel = 10
-SpCost = [1,2,3,4,5,6,7,8,9,10]
-DescEn = """Resists flinching from enemy attacks, allowing you to move without being slowed down by damage.
-Provides +<1> MDEF while active. Lasts <2> hits or <3> seconds, whichever ends first."""
-Params = [[1,2,3,4,5,6,7,8,9,10],[3,4,5,6,7,8,9,10,11,12,13],[10,13,16,19,22,25,28,31,34,37]]
+MaxLevel = 1
+SpCost = [20]
+DescEn = """Resists flinching from enemy attacks for 4 seconds, allowing you to move without being slowed down by damage. Cooldown: 10s."""
+Params = []
 
 [IncreasedHPRecovery]
 Name = "Improved HP Recovery"
