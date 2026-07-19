@@ -24,7 +24,7 @@ SpCost = [4]
 Icon = "sm_bash"
 Target = "Enemy"
 MaxLevel = 3
-SpCost = [8,8,15]
+SpCost = [7,7,10]
 AdjustableLevel = true
 DescEn = "Strikes a target for <1>% ATK damage. Grants Momentum for 5s, empowering the next follow-up skill. At level 3, has a 25% chance to stun the target for 1.5s.<br><br>Cooldown: 3s"
 Params = [[150,300,400]]
@@ -52,11 +52,11 @@ Name = "Magnum Break"
 Icon = "sm_magnum"
 Target = "Self"
 MaxLevel = 3
-SpCost = [30,30,30]
+SpCost = [25,25,25]
 AdjustableLevel = false
 DescEn = """Inflicts a centered non-elemental AOE attack dealing <1>% ATK damage and knocking enemies back 2 tiles.
 Area of effect: 5x5 at levels 1-2, 7x7 at level 3.
-At level 3, grants +50 ATK for 10 seconds."""
+At level 3, grants +50 ATK for 10 seconds.<br><br>Cooldown: 3s"""
 Params = [[150,225,300]]
 
 [Provoke]
