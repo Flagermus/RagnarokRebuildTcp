@@ -25,7 +25,10 @@ Cooldown: 3s
 Resists flinching from enemy attacks for 4 seconds, allowing you to escape without being slowed down by damage. Cooldown: 10s.
 
 ::IncreasedHPRecovery
-Adds a heal over time effect that recovers [SkillLevel * 5] HP plus [SkillLevel * 0.2]% of your MaxHP per level every 6 seconds. Additionally increases the effectiveness of healing items by 10% per level.
+Enables natural recovery of additional HP while the user is not moving.
+Recovers 25 HP plus 2% of your MaxHP per regen tick (idle/sit).
+At level 2, increases the effectiveness of healing items by 20%.
+At level 3, increases HP recovery to 50 HP plus 5% of your MaxHP per tick, and the bonus also applies while moving.
 
 ::MagnumBreak
 Inflicts a centered AOE attack dealing [150/225/300]% ATK damage and knocking enemies back 2 tiles.

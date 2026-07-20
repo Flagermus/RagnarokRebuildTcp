@@ -1372,9 +1372,17 @@ public class Player : IEntityAutoReset
         var hpRegenSkill = MaxLearnedLevelOfSkill(CharacterSkill.IncreasedHPRecovery);
         if (hpRegenSkill > 0 && hp < maxHp)
         {
-            var plusHpRegen = 5 * hpRegenSkill + maxHp * hpRegenSkill / 500;
-            regen += plusHpRegen;
-            CommandBuilder.SendImprovedRecoveryValue(this, plusHpRegen, 0);
+            //Lv1-2: bonus only when idle/sitting. Lv3: bonus applies in all states including moving.
+            var allowMoving = hpRegenSkill >= 3;
+            if (allowMoving || Character.State != CharacterState.Moving)
+            {
+                //per-level values from spec: Lv1=25+2%, Lv3=50+5% (Lv2 inherits Lv1 per spec)
+                int flat = hpRegenSkill >= 3 ? 50 : 25;
+                int percent = hpRegenSkill >= 3 ? 5 : 2;
+                var plusHpRegen = flat + maxHp * percent / 100;
+                regen += plusHpRegen;
+                CommandBuilder.SendImprovedRecoveryValue(this, plusHpRegen, 0);
+            }
         }
 
         if (regen < 1) regen = 1;

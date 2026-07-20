@@ -40,11 +40,13 @@ Params = []
 [IncreasedHPRecovery]
 Name = "Improved HP Recovery"
 Icon = "sm_recovery"
-MaxLevel = 10
+MaxLevel = 3
 Target = "Passive"
-DescEn = """Adds a heal over time effect that recovers <1> HP plus <2>% of your MaxHP every 6 seconds. \
- Additionally increases the healing effectiveness of items by <3>%."""
-Params = [[5,10,15,20,25,30,35,40,45,50],[0.2,0.4,0.6,0.8,1,1.2,1.4,1.6,1.8,2],[10,20,30,40,50,60,70,80,90,100]]
+DescEn = """Enables natural recovery of additional HP while the user is not moving. \
+Recovers [25/50] HP plus [2/5]% of your MaxHP per regen tick (idle/sit) at Lv1/Lv3 respectively. \
+At level 2+, increases the effectiveness of healing items by 20%. \
+At level 3, the bonus also applies while moving."""
+Params = [[25,25,50],[2,2,5]]
 
 [MagnumBreak]
 Name = "Magnum Break"
