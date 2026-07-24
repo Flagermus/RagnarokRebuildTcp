@@ -56,6 +56,8 @@ public class MagnumBreakHandler : SkillHandlerBase
 
             source.ExecuteCombatResult(res, false);
 
+            var thermalMark = StatusEffectState.NewStatusEffect(CharacterStatusEffect.ThermalMark, 5f);
+            e.Get<CombatEntity>().AddStatusEffect(thermalMark, false, res.AttackMotionTime);
 
             CommandBuilder.AttackMulti(source.Character, blastTarget, res, false);
         }

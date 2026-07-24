@@ -146,6 +146,13 @@ Icon = "블레싱"
 CanDispel = true
 CanDisable = true
 
+[ThermalMark]
+Name = "Thermal Mark"
+Type = "Debuff"
+Icon = "블레싱"
+CanDispel = true
+CanDisable = false
+
 [Pneuma]
 Name = "Pneuma"
 Type = "Buff"

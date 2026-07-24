@@ -70,6 +70,9 @@ You are able to receive damage without flinching.
 ::MagnumBreakAtkBuff
 Increases ATK by 50 for 15 seconds.
 
+::ThermalMark
+Marked by a thermal explosion. Trigger to deal AOE damage to nearby enemies centered on the target.
+
 ::Pneuma
 You are protected from ranged physical attacks.
 

@@ -1,7 +1,6 @@
 ﻿using RebuildSharedData.Data;
 using RebuildSharedData.Enum;
 using RebuildSharedData.Enum.EntityStats;
-using RoRebuildServer.Database.Domain;
 using RoRebuildServer.EntityComponents;
 using RoRebuildServer.EntityComponents.Character;
 using RoRebuildServer.EntityComponents.Util;
@@ -9,7 +8,6 @@ using RoRebuildServer.EntitySystem;
 using RoRebuildServer.Networking;
 using RoRebuildServer.Simulation.Util;
 using System.Diagnostics;
-using RoRebuildServer.Data.MapData;
 
 namespace RoRebuildServer.Simulation.Skills.SkillHandlers.Knight;
 
@@ -26,80 +24,130 @@ public class BowlingBashHandler : SkillHandlerBase
         var map = source.Character.Map;
         Debug.Assert(map != null);
 
-        using var potentialTargets = EntityListPool.Get();
-        map.GatherEnemiesInArea(source.Character, target.Character.Position, 5, potentialTargets, true, true);
+        using var aoeTargets = EntityListPool.Get();
+        map.GatherEnemiesInArea(source.Character, target.Character.Position, 2, aoeTargets, true, true);
 
-        potentialTargets.Remove(ref target.Entity); //we don't want the skill to chain to our first target, so remove them from the list
+        var hits = 2;
+        if (lvl >= 2 && source.Character.Type == CharacterType.Player
+            && source.Player.MainWeaponClass == (int)WeaponClass.TwoHandSword)
+        {
+            hits = aoeTargets.Count switch
+            {
+                <= 1 => 2,
+                <= 3 => 3,
+                _ => 4
+            };
+        }
+
+        var knockDir = source.Character.FacingDirection;
+        var attack = new AttackRequest(CharacterSkill.BowlingBash, 2.5f, 1, AttackFlags.Physical, AttackElement.None);
+
+        map.AddVisiblePlayersAsPacketRecipients(source.Character, target.Character);
+
+        var lastHitTime = 0f;
+
+        for (var t = 0; t < aoeTargets.Count; t++)
+        {
+            var hitTarget = aoeTargets[t].Get<CombatEntity>();
+            var isPrimary = t == 0;
+            var (_, hitLastTime) = HitTarget(source, hitTarget, attack, hits, knockDir, isPrimary);
+            if (hitLastTime > lastHitTime)
+                lastHitTime = hitLastTime;
+        }
+
+        if (lvl >= 3)
+        {
+            foreach (var t in aoeTargets)
+            {
+                var hit = t.Get<CombatEntity>();
+
+                var hasMark = hit.HasStatusEffectOfType(CharacterStatusEffect.ThermalMark);
+                if (hasMark)
+                    hit.StatusContainer!.RemoveStatusEffectOfType(CharacterStatusEffect.ThermalMark);
+                else
+                {
+                    hasMark = hit.StatusContainer?.RemovePendingStatusEffectOfType(CharacterStatusEffect.ThermalMark) ?? false;
+                }
+
+                if (!hasMark)
+                    continue;
+
+                //ThermalMark is StatusClientVisibility.Everyone, so removing it above sends a status-remove packet
+                //and clears the packet recipient list as part of that send. Repopulate it here so the detonation's
+                //AttackMulti call below actually has recipients to send to.
+                map.AddVisiblePlayersAsPacketRecipients(source.Character, hit.Character);
+
+                using var blast = EntityListPool.Get();
+                map.GatherEnemiesInArea(source.Character, hit.Character.Position, 2, blast, true, true);
+
+                var detAttack = new AttackRequest(CharacterSkill.BowlingBash, 0.5f, 1, AttackFlags.Physical, AttackElement.None);
+                foreach (var e in blast)
+                {
+                    if (!e.TryGet<WorldObject>(out var blastTarget))
+                        continue;
+                    var detRes = source.CalculateCombatResult(blastTarget.CombatEntity, detAttack);
+                    detRes.IsIndirect = true;
+                    detRes.Time = lastHitTime + 0.15f;
+                    source.ExecuteCombatResult(detRes, false);
+                    CommandBuilder.AttackMulti(source.Character, blastTarget, detRes, false);
+                }
+            }
+        }
 
         source.ApplyCooldownForAttackAction(target.Character.Position);
 
-        var srcPos = source.Character.Position;
-        var targetPos = target.Character.Position;
-        var dir = source.Character.FacingDirection;
-        if (srcPos != targetPos)
-            dir = (targetPos - srcPos).Normalize().GetDirectionForOffset();
+        if (source.Character.Type == CharacterType.Player)
+            source.Player.SetSkillSpecificCooldown(CharacterSkill.BowlingBash, 3f);
 
-        BowlingBashAttack(map.WalkData, source, target, potentialTargets, dir, lvl, 0);
+        CommandBuilder.ClearRecipients();
     }
 
-    private void BowlingBashAttack(MapWalkData walk, CombatEntity src, CombatEntity target, EntityList potentialTargets,
-        Direction knockbackDirection, int skillLevel, int recursionStep)
+    private (DamageInfo firstResult, float lastHitTime) HitTarget(CombatEntity src, CombatEntity target, AttackRequest attack, int hits, Direction knockDir, bool isPrimaryTarget)
     {
-        //var delay = recursionStep > 0 ? 0f : -0.1f;
+        DamageInfo? firstResult = null;
+        DamageInfo lastRes = default;
+        for (var i = 0; i < hits; i++)
+        {
+            var res = src.CalculateCombatResult(target, attack);
+            if (i > 0)
+                res.Time += 0.15f * i;
 
-        var res = HitTarget(src, target, skillLevel, false, recursionStep == 0); //first hit check.
-        if (!res)
-            return; //did our hit miss? Shame, no chaining.
+            if (isPrimaryTarget && i == 0)
+            {
+                CommandBuilder.SkillExecuteTargetedSkill(src.Character, target.Character, CharacterSkill.BowlingBash, 1, res);
+            }
+            else
+            {
+                CommandBuilder.AttackMulti(src.Character, target.Character, res, false);
+            }
 
-        HitTarget(src, target, skillLevel, true, false); //second hit happens 0.1s later.
+            if (i == 0)
+                firstResult = res;
 
-        var pos = target.Character.Position.AddDirectionToPosition(knockbackDirection);
-        if (!walk.IsCellWalkable(pos))
-            return; //if the target is not in a position where it can be knocked back (ie: it's being pushed into a wall), the chain fails.
+            src.ExecuteCombatResult(res, false);
+            lastRes = res;
+        }
 
-        //a funny quirk is that a boss monster won't be knocked back, but the collision check still occurs as if it moved.
+        if (lastRes.IsDamageResult)
+            ApplyKnockback(target, knockDir, 3);
+
+        return (firstResult ?? new DamageInfo(), lastRes.Time);
+    }
+
+    private void ApplyKnockback(CombatEntity target, Direction dir, int distance)
+    {
+        var map = target.Character.Map;
+        if (map == null) return;
+
+        var pos = target.Character.Position;
+        for (var i = 0; i < distance; i++)
+        {
+            var next = pos.AddDirectionToPosition(dir);
+            if (!map.WalkData.IsCellWalkable(next))
+                break;
+            pos = next;
+        }
         if (pos != target.Character.Position && target.GetSpecialType() != CharacterSpecialType.Boss)
-            target.Character.Map!.ChangeEntityPosition3(target.Character, target.Character.WorldPosition, pos, false);
-
-        for (var t = 0; t < potentialTargets.Count; t++)
-        {
-            var hit = potentialTargets[t].Get<CombatEntity>();
-            if (pos.SquareDistance(hit.Character.Position) > 1)
-                continue;
-
-            potentialTargets.SwapFromBack(t);
-            t--;
-
-            var knockDir = (Direction)GameRandom.Next(8); //knockback for chained targets is always in a random direction
-
-            //max recursion level is 9 with level 10 bowling bash
-            if (recursionStep < MathF.Max(1, skillLevel - 1))
-                BowlingBashAttack(walk, src, hit, potentialTargets, knockDir, skillLevel, recursionStep + 1);
-        }
-    }
-
-    private bool HitTarget(CombatEntity src, CombatEntity target, int skillLevel, bool hasDelay, bool isSkillHit)
-    {
-        var attack = new AttackRequest(CharacterSkill.BowlingBash, 1 + 0.4f * skillLevel, 1, AttackFlags.Physical, AttackElement.None);
-        var res = src.CalculateCombatResult(target, attack);
-        if (!hasDelay)
-            res.Time -= 0.2f;
-        //res.Time += timeDelay;
-
-        if (isSkillHit)
-        {
-            src.Character.Map?.AddVisiblePlayersAsPacketRecipients(src.Character, target.Character);
-            CommandBuilder.SkillExecuteTargetedSkill(src.Character, target.Character, CharacterSkill.BowlingBash, skillLevel, res);
-            CommandBuilder.ClearRecipients();
-        }
-        else
-        {
-            res.AttackSkill = CharacterSkill.None;
-            CommandBuilder.AttackAutoVis(src.Character, target.Character, res, false);
-        }
-
-        src.ExecuteCombatResult(res, false);
-
-        return res.IsDamageResult;
+            map.ChangeEntityPosition3(target.Character, target.Character.WorldPosition, pos, false);
     }
 }

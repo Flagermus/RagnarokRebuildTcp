@@ -106,7 +106,7 @@ Extends = "Swordsman"
 [Knight.SkillTree]
 CounterAttack = [["TwoHandSwordMastery",1]]
 TwoHandQuicken = [["TwoHandSwordMastery",1]]
-BowlingBash = [["TwoHandSwordMastery",5],["Bash",10],["CounterAttack",5],["TwoHandQuicken",10]]
+BowlingBash = [["TwoHandSwordMastery",5],["Bash",3],["CounterAttack",5],["TwoHandQuicken",10]]
 PecoPecoRiding = [["Endure",1]]
 CavalierMastery = [["PecoPecoRiding",1]]
 SpearMastery = []
