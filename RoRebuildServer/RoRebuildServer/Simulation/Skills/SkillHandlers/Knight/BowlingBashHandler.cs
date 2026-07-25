@@ -80,7 +80,7 @@ public class BowlingBashHandler : SkillHandlerBase
                 using var blast = EntityListPool.Get();
                 map.GatherEnemiesInArea(source.Character, hit.Character.Position, 2, blast, true, true);
 
-                var detAttack = new AttackRequest(CharacterSkill.BowlingBash, 0.5f, 1, AttackFlags.Physical, AttackElement.None);
+                var detAttack = new AttackRequest(CharacterSkill.BowlingBash, 1.0f, 1, AttackFlags.Physical, AttackElement.None);
                 foreach (var e in blast)
                 {
                     if (!e.TryGet<WorldObject>(out var blastTarget))

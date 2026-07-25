@@ -31,8 +31,8 @@ At level 2, increases the effectiveness of healing items by 20%.
 At level 3, increases HP recovery to 50 HP plus 5% of your MaxHP per tick, and the bonus also applies while moving.
 
 ::MagnumBreak
-Inflicts a 4x4 centered AoE attack dealing [150/225/300]% ATK damage and knocking enemies back 2 tiles.
-Apply Thermal Mark to hit enemys, detonate the mark deals 50% ATK as AoE damage to all nearby enemies centered on the target.
+Inflicts a 4x4 centered AoE attack dealing 150% ATK damage and knocking enemies back 2 tiles.
+Apply Thermal Mark to hit enemies for 5s, detonate the mark deals 100% ATK as AoE damage to all nearby enemies centered on the target.
 At level 2, increase damage to 225% ATK damage
 At level 3, incresase damage to 300% ATK damage, AoE to 6x6 and grants +50 ATK for 15 seconds.
 
