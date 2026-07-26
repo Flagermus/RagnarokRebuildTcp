@@ -311,6 +311,10 @@ At level 3, can trigger Thermal Mark.
 Strike a target far away from you with your s pear dealing [100 + SkillLevel * 50]% ranged physical damage. Requires a spear to be equipped to use.
 Range: 5/6/8/9/11 cells depending on the skill level
 
+::PecoPecoRiding
+Automatically granted to Knights and Crusaders, allowing them to ride a Peco Peco.
+While mounted, weight limit is increased by 1000 and movement speed is increased.
+
 
 //----------------Wizard-------------------
 

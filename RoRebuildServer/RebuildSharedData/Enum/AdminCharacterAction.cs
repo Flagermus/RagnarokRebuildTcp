@@ -10,4 +10,5 @@ public enum AdminCharacterAction
     GodModeSelf,
     GodModeOther,
     Disguise,
+    AddZeny,
 }

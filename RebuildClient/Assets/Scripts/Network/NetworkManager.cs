@@ -1638,6 +1638,15 @@ namespace Assets.Scripts.Network
             
             SendMessage(msg);
         }
+
+        public void SendAdminAddZeny(int amount)
+        {
+            var msg = StartMessage(PacketType.AdminCharacterAction);
+            msg.Write((int)AdminCharacterAction.AddZeny);
+            msg.Write(amount);
+
+            SendMessage(msg);
+        }
         
         public void SendAdminGodModeOther(string other, bool enable)
         {

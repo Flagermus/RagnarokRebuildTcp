@@ -92,6 +92,13 @@ public class PacketAdminCharacterAction : IClientPacketHandler
                     ch.OverrideClassId = id;
                 ch.Map?.RefreshEntity(ch);
                 break;
+            case AdminCharacterAction.AddZeny:
+                {
+                    var amount = msg.ReadInt32();
+                    ch.Player.AddZeny(amount);
+                    CommandBuilder.SendUpdateZeny(ch.Player);
+                    break;
+                }
 #if DEBUG
             //as a safety god mode is only available in debug builds
             case AdminCharacterAction.GodModeSelf:

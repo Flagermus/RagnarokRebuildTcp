@@ -604,9 +604,9 @@ public class CharacterStatusContainer
         var status = statusEffects[id];
 
         NotifyStatusEffectRemoval(ref status);
+        statusEffects!.Remove(id);
 
         StatusEffectHandler.OnExpiration(status.Type, Owner, ref status);
-        statusEffects!.Remove(id);
 
         RemoveUpdateModeForStatus(status.Type);
     }
@@ -616,9 +616,9 @@ public class CharacterStatusContainer
         Debug.Assert(Owner != null);
 
         NotifyStatusEffectRemoval(ref status);
+        statusEffects!.Remove(ref status);
 
         StatusEffectHandler.OnExpiration(status.Type, Owner, ref status);
-        statusEffects!.Remove(ref status);
 
         RemoveUpdateModeForStatus(status.Type);
     }

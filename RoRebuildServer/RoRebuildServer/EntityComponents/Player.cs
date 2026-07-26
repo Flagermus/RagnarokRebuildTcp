@@ -384,6 +384,7 @@ public class Player : IEntityAutoReset
         else
         {
             EnsureNoviceSkillPointsCorrectlyAssigned(); //if they're not a novice we can give them all the novice skills since they should have them
+            EnsureKnightSkillsCorrectlyAssigned();
             UpdateStats();
         }
 
@@ -784,6 +785,15 @@ public class Player : IEntityAutoReset
             AddSkillToCharacter(CharacterSkill.FirstAid, 1);
     }
 
+    private void EnsureKnightSkillsCorrectlyAssigned()
+    {
+        if (JobId != (int)JobType.JobKnight && JobId != (int)JobType.JobCrusader)
+            return;
+
+        if (MaxLearnedLevelOfSkill(CharacterSkill.PecoPecoRiding) < 1)
+            AddSkillToCharacter(CharacterSkill.PecoPecoRiding, 1);
+    }
+
     public void UpdateStats(bool updateSkillData = true, bool sendUpdate = true)
     {
         var level = GetData(PlayerStat.Level);
@@ -906,6 +916,8 @@ public class Player : IEntityAutoReset
             SetStat(CharacterStat.Sp, newMaxSp);
 
         var weightBonus = MaxLearnedLevelOfSkill(CharacterSkill.EnlargeWeightLimit) * 2000;
+        if (HasPeco)
+            weightBonus += 1000;
         SetStat(CharacterStat.WeightCapacity, 28000 + GetEffectiveStat(CharacterStat.Str) * 300 + weightBonus);
 
         var moveBonus = 1f;
@@ -1574,6 +1586,8 @@ public class Player : IEntityAutoReset
     {
         var curJob = GetData(PlayerStat.Job);
         SetData(PlayerStat.Job, newJobId);
+        if (newJobId == (int)JobType.JobKnight || newJobId == (int)JobType.JobCrusader)
+            AddSkillToCharacter(CharacterSkill.PecoPecoRiding, 1);
         if (curJob == 0)
         {
             SetData(PlayerStat.JobLevel, 1); //only reset job if they're changing from novice. Will need to change later.

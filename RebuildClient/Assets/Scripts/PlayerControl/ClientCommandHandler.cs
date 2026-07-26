@@ -661,6 +661,16 @@ namespace PlayerControl
                     return;
                 }
 
+                if (s[0] == "/zeny")
+                {
+                    if (s.Length < 2 || !int.TryParse(s[1], out var amount))
+                    {
+                        cameraFollower.AppendError("Invalid zeny amount. Usage: /zeny <amount>");
+                        return;
+                    }
+                    NetworkManager.Instance.SendAdminAddZeny(amount);
+                }
+
                 if (s[0] == "/disguise")
                 {
                     if(s.Length < 2)
