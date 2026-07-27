@@ -67,6 +67,9 @@ Your AGI and DEX are increased.
 ::Endure
 You are able to receive damage without flinching.
 
+::CounterAttack
+You are in a parry stance. The first physical attack you take is fully blocked and countered; magic damage taken is reduced by 25%.
+
 ::MagnumBreakAtkBuff
 Increases ATK by 50 for 15 seconds.
 
@@ -157,5 +160,5 @@ Enemies you face will deal more damage and have higher health, but also give mor
 ::AdminHide
 You cannot be seen and you cannot be targeted.
 
-::PecoPecoRiding
+::PecoRiding
 You are mounted on a Peco Peco, increasing your weight limit and movement speed.

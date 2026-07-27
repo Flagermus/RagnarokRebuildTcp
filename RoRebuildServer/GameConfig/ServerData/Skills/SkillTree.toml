@@ -104,10 +104,10 @@ CartRevolution = [["PushCart", 10], ["CrazyUproar", 1]]
 JobRank = 2
 Extends = "Swordsman"
 [Knight.SkillTree]
-CounterAttack = [["TwoHandSwordMastery",1]]
+CounterAttack = []
 TwoHandQuicken = [["TwoHandSwordMastery",1]]
-BowlingBash = [["TwoHandSwordMastery",5],["Bash",3],["CounterAttack",5],["TwoHandQuicken",10]]
-PecoPecoRiding = [["Endure",1]]
+BowlingBash = [["TwoHandSwordMastery",5],["Bash",3],["CounterAttack",1],["TwoHandQuicken",10]]
+PecoPecoRiding = []
 CavalierMastery = [["PecoPecoRiding",1]]
 SpearMastery = []
 Pierce = [["SpearMastery",1]]

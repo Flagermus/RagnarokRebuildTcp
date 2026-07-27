@@ -24,6 +24,11 @@ Cooldown: 3s
 ::Endure
 Resists flinching from enemy attacks for 4 seconds, allowing you to escape without being slowed down by damage. Cooldown: 10s.
 
+::CounterAttack
+Enters a parry stance for 0.5 seconds. Completely blocks the first physical attack you receive during this time (including every hit of a multi-hit skill) and retaliates for 500% ATK damage, stunning the attacker for 1.5 seconds.
+While the stance is active, incoming magic damage is reduced by 25%.
+Cost: 10 SP. Cooldown: 5s.
+
 ::IncreasedHPRecovery
 Enables natural recovery of additional HP while the user is not moving.
 Recovers 25 HP plus 2% of your MaxHP per regen tick (idle/sit).

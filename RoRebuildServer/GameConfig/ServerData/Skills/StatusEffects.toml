@@ -132,6 +132,10 @@ Icon = "인듀어"
 CanDispel = true
 CanDisable = true
 
+[CounterAttack]
+Name = "Counter Attack"
+Type = "Buff"
+
 [Momentum]
 Name = "Momentum"
 Type = "Buff"

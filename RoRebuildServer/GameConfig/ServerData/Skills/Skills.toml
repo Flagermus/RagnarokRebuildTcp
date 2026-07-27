@@ -257,9 +257,10 @@ SpCost = [14,18,22,26,30,34,38,42,46,50]
 Name = "Counter Attack"
 Icon = "kn_autocounter"
 Target = "Self"
-MaxLevel = 5
-SpCost = [3]
-InterruptMode = "NoInterrupt"
+MaxLevel = 1
+SpCost = [10]
+Params = []
+DescEn = "Enters a parry stance for 0.5 seconds. Completely negates the first physical attack received (including every hit of a multi-hit skill) and retaliates for 500% ATK damage, stunning the attacker for 1.5s. Incoming magic damage is reduced by 25% during the stance. Cost: 10 SP. Cooldown: 5s."
 
 [BowlingBash]
 Name = "Bowling Bash"
