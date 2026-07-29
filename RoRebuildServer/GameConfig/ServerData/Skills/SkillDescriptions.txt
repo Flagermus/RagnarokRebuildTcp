@@ -52,6 +52,10 @@ Adds +[SkillLevel * 4] weapon attack power when using a dagger or one-handed swo
 ::TwoHandSwordMastery
 Adds +[SkillLevel * 4] weapon attack power when using two-handed swords.
 
+::SpearMastery
+Spear-class weapons always have a minimum attack range of 4 cells.
+Attacks and skills that hit a target 3 or more cells away ignore 10% of the target's Hard DEF.
+
 //----------------Archer-------------------
 
 ::DoubleStrafe
