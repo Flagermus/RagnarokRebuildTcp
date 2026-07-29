@@ -384,6 +384,7 @@ public class Player : IEntityAutoReset
         else
         {
             EnsureNoviceSkillPointsCorrectlyAssigned(); //if they're not a novice we can give them all the novice skills since they should have them
+            EnsureSwordsmanSkillsCorrectlyAssigned();
             EnsureKnightSkillsCorrectlyAssigned();
             UpdateStats();
         }
@@ -787,11 +788,20 @@ public class Player : IEntityAutoReset
 
     private void EnsureKnightSkillsCorrectlyAssigned()
     {
-        if (JobId != (int)JobType.JobKnight && JobId != (int)JobType.JobCrusader)
+        if (JobId != (int)JobType.JobKnight && JobId != (int)JobType.JobCrusader && JobId != (int)JobType.JobPecoKnight && JobId != (int)JobType.JobPecoCrusader)
             return;
 
         if (MaxLearnedLevelOfSkill(CharacterSkill.PecoPecoRiding) < 1)
             AddSkillToCharacter(CharacterSkill.PecoPecoRiding, 1);
+    }
+
+    private void EnsureSwordsmanSkillsCorrectlyAssigned()
+    {
+        if (JobId != (int)JobType.JobSwordsman && JobId != (int)JobType.JobKnight && JobId != (int)JobType.JobPecoKnight && JobId != (int)JobType.JobCrusader && JobId != (int)JobType.JobPecoCrusader)
+            return;
+
+        if (MaxLearnedLevelOfSkill(CharacterSkill.SpearMastery) < 1)
+            AddSkillToCharacter(CharacterSkill.SpearMastery, 1);
     }
 
     public void UpdateStats(bool updateSkillData = true, bool sendUpdate = true)
@@ -814,6 +824,8 @@ public class Player : IEntityAutoReset
 
         if (MainWeaponClass == (int)WeaponClass.Bow) //bow
             SetStat(CharacterStat.Range, int.Max(1, Equipment.WeaponRange + MaxLearnedLevelOfSkill(CharacterSkill.VultureEye)));
+        else if (MainWeaponClass == (int)WeaponClass.Spear || MainWeaponClass == (int)WeaponClass.TwoHandSpear) //spear always has a minimum 4-cell range, no skill required
+            SetStat(CharacterStat.Range, int.Max(4, Equipment.WeaponRange));
         else
             SetStat(CharacterStat.Range, int.Max(1, Equipment.WeaponRange));
 
@@ -1052,13 +1064,6 @@ public class Player : IEntityAutoReset
                 break;
             case WeaponClass.TwoHandSword: //2hand sword
                 mastery = MaxLearnedLevelOfSkill(CharacterSkill.TwoHandSwordMastery) * 4;
-                break;
-            case WeaponClass.Spear: //spear
-            case WeaponClass.TwoHandSpear: //2hand spear
-                if (HasPeco)
-                    mastery = MaxLearnedLevelOfSkill(CharacterSkill.SpearMastery) * 5;
-                else
-                    mastery = MaxLearnedLevelOfSkill(CharacterSkill.SpearMastery) * 4;
                 break;
             case WeaponClass.Mace:
             case WeaponClass.TwoHandMace:
@@ -1586,6 +1591,8 @@ public class Player : IEntityAutoReset
     {
         var curJob = GetData(PlayerStat.Job);
         SetData(PlayerStat.Job, newJobId);
+        if (newJobId == (int)JobType.JobSwordsman || newJobId == (int)JobType.JobKnight || newJobId == (int)JobType.JobPecoKnight || newJobId == (int)JobType.JobCrusader || newJobId == (int)JobType.JobPecoCrusader)
+            AddSkillToCharacter(CharacterSkill.SpearMastery, 1);
         if (newJobId == (int)JobType.JobKnight || newJobId == (int)JobType.JobCrusader)
             AddSkillToCharacter(CharacterSkill.PecoPecoRiding, 1);
         if (curJob == 0)

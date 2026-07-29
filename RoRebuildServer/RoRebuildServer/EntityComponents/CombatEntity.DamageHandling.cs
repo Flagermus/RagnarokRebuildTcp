@@ -555,7 +555,18 @@ public partial class CombatEntity
 
                 sizeMod += GetStat(CharacterStat.AddAttackSmallSize + (int)defSize);
 
-                defMod = int.Clamp(100 - GetStat(CharacterStat.IgnoreDefRaceFormless + (int)targetRace) - GetStat(CharacterStat.IgnoreDefSmall + (int)defSize), 0, 100);
+                var spearMasteryDefIgnore = 0;
+                if (Character.Player.MainWeaponClass == (int)WeaponClass.Spear || Character.Player.MainWeaponClass == (int)WeaponClass.TwoHandSpear)
+                {
+                    if (Character.Player.MaxLearnedLevelOfSkill(CharacterSkill.SpearMastery) > 0)
+                    {
+                        var dist = Character.Position.SquareDistance(target.Character.Position);
+                        if (dist >= 3)
+                            spearMasteryDefIgnore = 10;
+                    }
+                }
+
+                defMod = int.Clamp(100 - GetStat(CharacterStat.IgnoreDefRaceFormless + (int)targetRace) - GetStat(CharacterStat.IgnoreDefSmall + (int)defSize) - spearMasteryDefIgnore, 0, 100);
             }
 
             if (Character.Type == CharacterType.Player && (flags & AttackFlags.IgnoreWeaponRefine) == 0)
