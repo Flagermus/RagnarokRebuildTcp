@@ -310,6 +310,13 @@ Cast time scales from 0.1s to 0.5s, and damage from 100% to 500%, depending on t
 Skill Range: 14 tiles
 Recast time: 5s
 
+::Pierce
+Thrusts your spear into a single target 3 times, each hit dealing 150% ATK physical damage (450% total).
+Consuming Momentum increases total damage by 50%.
+If the target is Stunned, total damage is increased by 30%.
+Both bonuses stack for up to 810% total damage.
+Cost: 10 SP. Cooldown: 3s.
+
 ::BowlingBash
 Strikes a 2-hit smashing blow at a single target. Each strike deals 250% ATK damage to all enemies within a 5x5 area around the target and pushes them back 3 cells.
 Cost: 15 SP. Cooldown: 3s.

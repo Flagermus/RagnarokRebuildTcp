@@ -295,8 +295,9 @@ Params = []
 [Pierce]
 Icon = "kn_pierce"
 Target = "Enemy"
-MaxLevel = 10
-SpCost = [7]
+MaxLevel = 1
+SpCost = [10]
+DescEn = "Thrusts a target with a spear for 3 hits of 150% ATK each (450% total). Consuming Momentum increases total damage by 50% (675% total). If the target is Stunned, total damage is increased by 30% (585% total). Both bonuses stack (810% total).<br><br>Cost: 10 SP. Cooldown: 3s."
 
 [SpearStab]
 Name = "Spear Stab"

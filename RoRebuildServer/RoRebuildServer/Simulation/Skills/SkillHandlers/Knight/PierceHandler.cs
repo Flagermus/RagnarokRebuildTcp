@@ -22,21 +22,34 @@ public class PierceHandler : SkillHandlerBase
 
     public override void Process(CombatEntity source, CombatEntity? target, Position position, int lvl, bool isIndirect, bool isItemSource)
     {
-        lvl = lvl.Clamp(1, 10);
+        lvl = lvl.Clamp(1, 1);
 
         if (target == null || !target.IsValidTarget(source))
             return;
 
-        var sizeMod = 2;
-        if (target.Character.Type == CharacterType.Monster)
-            sizeMod = (int)target.Character.Monster.MonsterBase.Size + 1;
-        var req = new AttackRequest(CharacterSkill.Pierce, 1f + lvl * 0.1f, sizeMod, AttackFlags.Physical, AttackElement.None);
-        req.AccuracyRatio = 100 + lvl * 5;
+        var hasMomentum = source.HasStatusEffectOfType(CharacterStatusEffect.Momentum);
+        var targetStunned = target.HasStatusEffectOfType(CharacterStatusEffect.Stun);
+
+        // Base = 3 hits * 1.5 = 4.5. Bonuses are additive percentages of that base:
+        // Momentum +50% of base, Stun +30% of base. Final strike multiplier:
+        // 450% / 675% (Momentum) / 585% (Stun) / 810% (both).
+        var totalMultiplier = 4.5f;
+        if (hasMomentum) totalMultiplier += 4.5f * 0.5f;   // +50% of base 450%
+        if (targetStunned) totalMultiplier += 4.5f * 0.3f; // +30% of base 450%
+
+        if (hasMomentum)
+            source.StatusContainer!.RemoveStatusEffectOfType(CharacterStatusEffect.Momentum);
+
+        var perHit = totalMultiplier / 3f;
+        var req = new AttackRequest(CharacterSkill.Pierce, perHit, 3, AttackFlags.Physical, AttackElement.None);
         var res = source.CalculateCombatResult(target, req);
 
         source.ApplyCooldownForAttackAction(target);
+        if (source.Character.Type == CharacterType.Player)
+            source.Player.SetSkillSpecificCooldown(CharacterSkill.Pierce, 3f);
+
         source.ExecuteCombatResult(res, false);
 
-        CommandBuilder.SkillExecuteTargetedSkillAutoVis(source.Character, target.Character, CharacterSkill.Pierce, lvl, res);
+        CommandBuilder.SkillExecuteTargetedSkillAutoVis(source.Character, target.Character, CharacterSkill.Pierce, 1, res);
     }
 }
