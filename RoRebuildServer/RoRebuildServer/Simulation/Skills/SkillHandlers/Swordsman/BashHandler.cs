@@ -30,7 +30,6 @@ namespace RoRebuildServer.Simulation.Skills.SkillHandlers.Swordsman
             var req = new AttackRequest(CharacterSkill.Bash, damageMultiplier, 1, AttackFlags.Physical, AttackElement.None);
             var res = source.CalculateCombatResult(target, req);
 
-            source.ApplyCooldownForAttackAction(target);
             source.ExecuteCombatResult(res, false);
 
             var momentum = StatusEffectState.NewStatusEffect(CharacterStatusEffect.Momentum, 5f);

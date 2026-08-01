@@ -44,7 +44,6 @@ public class PierceHandler : SkillHandlerBase
         var req = new AttackRequest(CharacterSkill.Pierce, perHit, 3, AttackFlags.Physical, AttackElement.None);
         var res = source.CalculateCombatResult(target, req);
 
-        source.ApplyCooldownForAttackAction(target);
         if (source.Character.Type == CharacterType.Player)
             source.Player.SetSkillSpecificCooldown(CharacterSkill.Pierce, 3f);
 
