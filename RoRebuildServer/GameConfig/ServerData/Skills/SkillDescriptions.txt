@@ -318,10 +318,10 @@ Both bonuses stack for up to 810% total damage.
 Cost: 10 SP. Cooldown: 3s.
 
 ::BowlingBash
-Strikes a 2-hit smashing blow at a single target. Each strike deals 250% ATK damage to all enemies within a 5x5 area around the target and pushes them back 3 cells.
+Strikes a smashing blow at a single target. Each strike deals 250% ATK physical damage to all enemies in a 5x5 area around the target and pushes them back 3 cells.
+By default, deals 2 hits per target. With a Two-Handed Sword equipped, hits scale based on target count: 2 hits at 1 target, 3 hits at 2-3 targets, 4 hits at 4+ targets.
+If any hit target is affected by Thermal Mark, the mark detonates for an additional 100% ATK physical damage to enemies in a 3x3 area centered on that target.
 Cost: 15 SP. Cooldown: 3s.
-At level 2, when equipped with a Two-Handed Sword, total hits increase based on the number of targets hit: 2 hits at 1 target, 3 hits at 2-3 targets, 4 hits at 4+ targets (max 1000% ATK per target).
-At level 3, can trigger Thermal Mark.
 
 ::SpearBoomerang
 Strike a target far away from you with your s pear dealing [100 + SkillLevel * 50]% ranged physical damage. Requires a spear to be equipped to use.

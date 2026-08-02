@@ -18,6 +18,11 @@ namespace Assets.Scripts.SkillHandlers.Handlers.Knight
                 target.AttachEffect(CastLockOnEffect.Create(castTime, target.gameObject));
         }
 
+        public override void OnHitEffect(ServerControllable target, ref AttackResultData attack)
+        {
+            target.Messages.SendHitEffect(attack.Src, attack.MotionTime, (int)HitEffectType.Normal, attack.HitCount);
+        }
+
         public override void ExecuteSkillTargeted(ServerControllable src, ref AttackResultData attack)
         {
             src.PerformBasicAttackMotion();
