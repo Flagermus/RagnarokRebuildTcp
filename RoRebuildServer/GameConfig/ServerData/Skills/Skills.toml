@@ -269,7 +269,7 @@ Target = "Enemy"
 MaxLevel = 3
 SpCost = [15,15,15]
 InterruptMode = "NoInterrupt"
-DescEn = "Strikes a 2-hit smashing blow at a single target. Each strike deals 250% ATK damage to all enemies within a 5x5 area and pushes them back 3 cells. Cost: 15 SP. Cooldown: 3s. At level 2, when equipped with a Two-Handed Sword, total hits increase based on the number of targets hit. At level 3, can trigger and detonate Thermal Mark for additional AOE damage."
+DescEn = "Strikes a smashing blow at a single target. Each strike deals 250% ATK physical damage to all enemies in a 5x5 area around the target and pushes them back 3 cells. Base 2 hits per target; with a Two-Handed Sword equipped, total hits scale based on the number of targets hit (2/3/4 hits at 1/2-3/4+ targets). If any target is marked with Thermal Mark, it is consumed to deal an additional 100% ATK physical damage to enemies in a 3x3 area centered on that target. Cost: 15 SP. Cooldown: 3s."
 
 [PecoPecoRiding]
 Name = "Peco Peco Riding"
@@ -318,8 +318,9 @@ InterruptMode = "NoInterrupt"
 Name = "Spear Boomerang"
 Icon = "kn_spearboomerang"
 Target = "Enemy"
-MaxLevel = 5
+MaxLevel = 1
 SpCost = [10]
+DescEn = "Hurls your spear at a distant target, dealing 300% ATK physical damage. Requires a spear to be equipped.<br><br>Range: 13 cells. Cost: 10 SP. Cooldown: 3s."
 
 [ChargeAttack]
 Name = "Charge Attack"

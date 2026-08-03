@@ -324,8 +324,8 @@ If any hit target is affected by Thermal Mark, the mark detonates for an additio
 Cost: 15 SP. Cooldown: 3s.
 
 ::SpearBoomerang
-Strike a target far away from you with your s pear dealing [100 + SkillLevel * 50]% ranged physical damage. Requires a spear to be equipped to use.
-Range: 5/6/8/9/11 cells depending on the skill level
+Hurls your spear at a distant target, dealing 300% ATK physical damage. Requires a spear to be equipped to use.
+Range: 13 cells. Cost: 10 SP. Cooldown: 3s.
 
 ::PecoPecoRiding
 Automatically granted to Knights and Crusaders, allowing them to ride a Peco Peco.
