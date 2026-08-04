@@ -39,7 +39,6 @@ public class BowlingBashHandler : SkillHandlerBase
             };
         }
 
-        var knockDir = source.Character.FacingDirection;
         //One bundled roll per (skill, target): the engine multiplies Damage by HitCount server-side,
         //and the packet's HitCount field makes the client fan out the staggered multi-hit visuals.
         //Multiplier stays 2.5 per strike (each strike is 250% ATK), HitCount carries the hit count,
@@ -111,7 +110,7 @@ public class BowlingBashHandler : SkillHandlerBase
             if (overlap.ContainsKey(hitTarget.Character.Id))
                 continue;
             var isPrimary = t == 0;
-            var (_, hitLastTime) = HitTarget(source, hitTarget, attack, knockDir, isPrimary);
+            var (_, hitLastTime) = HitTarget(source, hitTarget, attack, isPrimary);
             if (hitLastTime > lastHitTime)
                 lastHitTime = hitLastTime;
         }
@@ -138,10 +137,9 @@ public class BowlingBashHandler : SkillHandlerBase
                     lastHitTime = bbRes.Time;
 
                 //Bowling Bash packet: bundled hits, shown as staggered BB damage numbers.
+                bbRes.KnockBack = 3;
+                bbRes.AttackPosition = source.Character.Position;
                 source.ExecuteCombatResult(bbRes, false);
-
-                if (bbRes.IsDamageResult)
-                    ApplyKnockback(hitTarget, knockDir, 3);
 
                 var isPrimary = t == 0;
                 source.Character.Map?.AddVisiblePlayersAsPacketRecipients(source.Character, hitTarget.Character);
@@ -155,7 +153,6 @@ public class BowlingBashHandler : SkillHandlerBase
                 //0.2 * hits + 0.4 places the first detonation number 0.6s after the last Bowling Bash hit.
                 detRes.Time = lastHitTime + 0.2f * hits + 0.4f;
                 source.ExecuteCombatResult(detRes, false);
-                source.Character.Map?.AddVisiblePlayersAsPacketRecipients(source.Character, hitTarget.Character);
                 CommandBuilder.AttackMulti(source.Character, hitTarget.Character, detRes, false);
             }
 
@@ -182,13 +179,12 @@ public class BowlingBashHandler : SkillHandlerBase
         CommandBuilder.ClearRecipients();
     }
 
-    private (DamageInfo firstResult, float lastHitTime) HitTarget(CombatEntity src, CombatEntity target, AttackRequest attack, Direction knockDir, bool isPrimaryTarget)
+    private (DamageInfo firstResult, float lastHitTime) HitTarget(CombatEntity src, CombatEntity target, AttackRequest attack, bool isPrimaryTarget)
     {
         var res = src.CalculateCombatResult(target, attack); //HitCount already in attack, applied by engine
 
-        //ChangeEntityPosition3 (via ApplyKnockback below) clears the packet recipient list, so recipients
-        //are repopulated before each send to prevent multi-target packets from being silently dropped.
-        src.Character.Map?.AddVisiblePlayersAsPacketRecipients(src.Character, target.Character);
+        res.KnockBack = 3;
+        res.AttackPosition = src.Character.Position;
 
         if (isPrimaryTarget)
             CommandBuilder.SkillExecuteTargetedSkill(src.Character, target.Character, CharacterSkill.BowlingBash, 1, res);
@@ -197,26 +193,6 @@ public class BowlingBashHandler : SkillHandlerBase
 
         src.ExecuteCombatResult(res, false);
 
-        if (res.IsDamageResult)
-            ApplyKnockback(target, knockDir, 3);
-
         return (res, res.Time);
-    }
-
-    private void ApplyKnockback(CombatEntity target, Direction dir, int distance)
-    {
-        var map = target.Character.Map;
-        if (map == null) return;
-
-        var pos = target.Character.Position;
-        for (var i = 0; i < distance; i++)
-        {
-            var next = pos.AddDirectionToPosition(dir);
-            if (!map.WalkData.IsCellWalkable(next))
-                break;
-            pos = next;
-        }
-        if (pos != target.Character.Position && target.GetSpecialType() != CharacterSpecialType.Boss)
-            map.ChangeEntityPosition3(target.Character, target.Character.WorldPosition, pos, false);
     }
 }
