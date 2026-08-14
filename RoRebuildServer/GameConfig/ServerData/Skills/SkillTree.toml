@@ -105,8 +105,8 @@ JobRank = 2
 Extends = "Swordsman"
 [Knight.SkillTree]
 CounterAttack = []
-TwoHandQuicken = [["TwoHandSwordMastery",1]]
-BowlingBash = [["TwoHandSwordMastery",5],["Bash",3],["CounterAttack",1],["TwoHandQuicken",10]]
+TwoHandQuicken = [["TwoHandSwordMastery",1],["BowlingBash",3]]
+BowlingBash = [["TwoHandSwordMastery",5],["Bash",3],["CounterAttack",1]]
 PecoPecoRiding = []
 CavalierMastery = [["PecoPecoRiding",1]]
 SpearMastery = []

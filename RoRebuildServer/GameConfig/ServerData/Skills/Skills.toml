@@ -250,8 +250,15 @@ MaxLevel = 10
 Name = "Two-Hand Quicken"
 Icon = "kn_twohandquicken"
 Target = "Self"
-MaxLevel = 10
-SpCost = [14,18,22,26,30,34,38,42,46,50]
+MaxLevel = 1
+SpCost = [1]
+DescEn = """[Toggle] [Two-Handed Sword Exclusive]
+Increases Attack Speed by 20%.
+While active, basic attacks build charges toward a free Bowling Bash:
+- Normal attacks grant 1 charge.
+- Critical attacks grant 2 charges.
+At 10 charges, Bowling Bash is automatically triggered at no SP cost.
+Cost: 1 SP / second."""
 
 [CounterAttack]
 Name = "Counter Attack"

@@ -17,18 +17,34 @@ public class TwoHandQuickenHandler : SkillHandlerBase
         return base.ValidateTarget(source, target, position, lvl, false, false);
     }
 
+    public override bool ShouldSkillCostSp(CombatEntity source)
+    {
+        return !source.HasStatusEffectOfType(CharacterStatusEffect.TwoHandQuicken);
+    }
+
     public override void Process(CombatEntity source, CombatEntity? target, Position position, int lvl, bool isIndirect,
         bool isItemSource)
     {
         source.ApplyCooldownForSupportSkillAction();
 
-        var timing = 30; //30% delay reduction (about 42% faster with no buffs, about when combo'd with berserk pot about +100%)
-        if (source.Character.Type == CharacterType.Monster && lvl >= 10)
-            timing = 70; //monsters with lvl 10 get 70% delay reduction (about +330% faster with no other modifiers)
-
-        var status = StatusEffectState.NewStatusEffect(CharacterStatusEffect.TwoHandQuicken, 180f, timing);
-        source.AddStatusEffect(status);
-
         CommandBuilder.SkillExecuteSelfTargetedSkillAutoVis(source.Character, CharacterSkill.TwoHandQuicken, lvl, isIndirect);
+
+        if (source.HasStatusEffectOfType(CharacterStatusEffect.TwoHandQuicken))
+        {
+            source.RemoveStatusOfTypeIfExists(CharacterStatusEffect.TwoHandQuicken);
+            source.UpdateStats(); //RemoveStatusEffectOfType doesn't re-run UpdateStats; recompute ASPD so the buff actually reverts
+            return;
+        }
+
+        // Value1: ASPD bonus (always 20). Value2: hit-charge counter (managed in OnAttack).
+        // Value3: skill level (short).
+        var status = StatusEffectState.NewStatusEffect(
+            CharacterStatusEffect.TwoHandQuicken,
+            int.MaxValue / 1000f, //effectively permanent; client hides timers > 24h (same convention as PecoRiding)
+            val1: 20,
+            val2: 0,
+            val3: (short)lvl
+        );
+        source.AddStatusEffect(status);
     }
 }

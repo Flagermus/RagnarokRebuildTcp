@@ -44,7 +44,7 @@ Hallucinations are distorting your vision and making it hard to gauge how much d
 Provides additional storage for items.
 
 ::TwoHandQuicken
-Attack speed with two-hand weapons increased. Ends early if you unequip your two-handed weapon.
+Attack speed with two-handed swords increased by 20%. While active, basic attacks build charges; at 10 charges, Bowling Bash is triggered automatically at no SP cost. Costs 1 SP per second. Ends if you unequip your two-handed weapon, run out of SP, or click Two-Hand Quicken again to deactivate.
 
 ::Blessing
 Your STR, INT, and DEX are increased.

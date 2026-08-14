@@ -123,6 +123,8 @@ public class Player : IEntityAutoReset
 
     public void SetSkillSpecificCooldown(CharacterSkill skill, float time) => SkillSpecificCooldowns[skill] = Time.ElapsedTimeFloat + time;
 
+    public void ResetSkillSpecificCooldown(CharacterSkill skill) => SkillSpecificCooldowns.Remove(skill);
+
     [ScriptUseable]
     public int GetNpcFlag(string flag) => NpcFlags != null && NpcFlags.TryGetValue(flag, out var val) ? val : 0;
 

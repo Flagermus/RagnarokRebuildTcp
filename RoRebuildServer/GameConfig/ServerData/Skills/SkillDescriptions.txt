@@ -301,8 +301,14 @@ At present you will need to remain online for your shop to stay open.
 //----------------Knight-------------------
 
 ::TwoHandQuicken
-Increases attack speed when using two-handed swords, reducing the delay between attacks by 30%.
-Duration: [SkillLevel * 30] seconds.
+[Toggle] [Two-Handed Sword Exclusive]
+Increases Attack Speed by 20% while a two-handed sword is equipped.
+While active, basic attacks build charges toward a free Bowling Bash:
+- Normal attacks grant 1 charge.
+- Critical attacks grant 2 charges.
+At 10 charges, Bowling Bash is automatically triggered at no SP cost.
+Cost: 1 SP / second. Requires Bowling Bash (lv 3) learned to take this skill.
+Click the skill again to turn the buff off.
 
 ::ChargeAttack
 Quickly close the gap to a single target, dealing damage and knocking them back. 
