@@ -68,8 +68,6 @@ public class MagnumBreakHandler : SkillHandlerBase
             source.AddStatusEffect(status);
         }
 
-        source.ApplyCooldownForAttackAction(position);
-
         if (source.Character.Type == CharacterType.Player)
             source.Player.SetSkillSpecificCooldown(CharacterSkill.MagnumBreak, 3f);
 

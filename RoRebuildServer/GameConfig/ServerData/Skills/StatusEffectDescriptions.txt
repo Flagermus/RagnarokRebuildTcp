@@ -73,6 +73,12 @@ You are in a parry stance. The first physical attack you take is fully blocked a
 ::MagnumBreakAtkBuff
 Increases ATK by 50 for 15 seconds.
 
+::Momentum
+Buildup of momentum from a successful thrust. Empowers follow-up skills
+
+::Root
+Movement locked. You cannot move, but you can still attack and cast skills.
+
 ::ThermalMark
 Marked by a thermal explosion. Trigger to deal AOE damage to nearby enemies centered on the target.
 

@@ -14,7 +14,7 @@ namespace RoRebuildServer.Simulation.Skills.SkillHandlers.Knight;
 [SkillHandler(CharacterSkill.BowlingBash, SkillClass.Physical)]
 public class BowlingBashHandler : SkillHandlerBase
 {
-    public override float GetCastTime(CombatEntity source, CombatEntity? target, Position position, int lvl) => 0.7f;
+    public override float GetCastTime(CombatEntity source, CombatEntity? target, Position position, int lvl) => 0f;
 
     public override void Process(CombatEntity source, CombatEntity? target, Position position, int lvl, bool isIndirect, bool isItemSource)
     {
@@ -170,8 +170,6 @@ public class BowlingBashHandler : SkillHandlerBase
                 CommandBuilder.AttackMulti(source.Character, ce.Character, detRes, false);
             }
         }
-
-        source.ApplyCooldownForAttackAction(target.Character.Position);
 
         if (source.Character.Type == CharacterType.Player)
             source.Player.SetSkillSpecificCooldown(CharacterSkill.BowlingBash, 3f);

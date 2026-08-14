@@ -9,15 +9,6 @@ namespace Assets.Scripts.SkillHandlers.Handlers.Knight
     [SkillHandler(CharacterSkill.BowlingBash)]
     public class BowlingBashHandler : SkillHandlerBase
     {
-        public override void StartSkillCasting(ServerControllable src, ServerControllable target, int lvl, float castTime)
-        {
-            HoldAttackMotionForCast(src, castTime - 0.1f, 0.1f);
-            //src.AttachEffect(CastEffect.Create(castTime, src.gameObject, AttackElement.Water));
-            
-            if(target != null)
-                target.AttachEffect(CastLockOnEffect.Create(castTime, target.gameObject));
-        }
-
         public override void OnHitEffect(ServerControllable target, ref AttackResultData attack)
         {
             target.Messages.SendHitEffect(attack.Src, attack.MotionTime, (int)HitEffectType.Normal, attack.HitCount);

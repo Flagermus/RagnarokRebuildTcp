@@ -143,6 +143,13 @@ Icon = "블레싱"
 CanDispel = true
 CanDisable = true
 
+[Root]
+Name = "Root"
+Type = "Debuff"
+Icon = "블레싱"
+CanDispel = true
+CanDisable = true
+
 [MagnumBreakAtkBuff]
 Name = "Magnum Break"
 Type = "Buff"
