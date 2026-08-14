@@ -561,7 +561,8 @@ public partial class CombatEntity
                     if (Character.Player.MaxLearnedLevelOfSkill(CharacterSkill.SpearMastery) > 0)
                     {
                         var dist = Character.Position.SquareDistance(target.Character.Position);
-                        if (dist >= 3)
+                        //FullSpearMasteryTip skills (Spear Stab Lv3) get the tip-zone bonus at any range
+                        if (dist >= 3 || req.Flags.HasFlag(AttackFlags.FullSpearMasteryTip))
                             spearMasteryDefIgnore = 10;
                     }
                 }

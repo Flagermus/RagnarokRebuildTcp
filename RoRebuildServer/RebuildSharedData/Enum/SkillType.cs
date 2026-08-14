@@ -51,6 +51,7 @@
         IgnoreWeaponRefine = 1 << 18,
         ReverseDefense = 1 << 19,
         OffHandWeapon = 1 << 20,
+        FullSpearMasteryTip = 1 << 21,
         NoTriggers = NoTriggerOnAttackEffects | NoTriggerWhenAttackedEffects,
         PhysicalStatusTest = Physical | IgnoreEvasion | IgnoreNullifyingGroundMagic | NoTriggerOnAttackEffects | NoTriggerWhenAttackedEffects | NoElement
     }

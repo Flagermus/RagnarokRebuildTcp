@@ -303,8 +303,10 @@ DescEn = "Thrusts a target with a spear for 3 hits of 150% ATK each (450% total)
 Name = "Spear Stab"
 Icon = "kn_spearstab"
 Target = "Enemy"
-MaxLevel = 10
-SpCost = [9]
+MaxLevel = 3
+SpCost = [10]
+DescEn = """Thrusts forward with heavy force, dealing 300% ATK to all enemies in a 5x5 area around the target, knocking them back 5 cells. Cost: 10 SP. Cooldown: 3s.<br><br>At level 2, applies Root for 3 seconds, locking hit targets in place.<br>At level 3, grants Momentum when 2 or more targets are hit, and gets the full effect of the Tip Zone from Spear Mastery."""
+Params = []
 
 [BrandishSpear]
 Name = "Brandish Spear"
