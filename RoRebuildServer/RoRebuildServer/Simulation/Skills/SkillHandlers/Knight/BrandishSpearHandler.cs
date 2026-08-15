@@ -9,11 +9,11 @@ using RoRebuildServer.Simulation.Util;
 
 namespace RoRebuildServer.Simulation.Skills.SkillHandlers.Knight
 {
-    [SkillHandler(CharacterSkill.BrandishSpear)]
+    [SkillHandler(CharacterSkill.BrandishSpear, SkillClass.Physical)]
     public class BrandishSpearHandler : SkillHandlerBase
     {
-        public override float GetCastTime(CombatEntity source, CombatEntity? target, Position position, int lvl) => 0.7f;
-        public override int GetSkillRange(CombatEntity source, int lvl) => int.Min(1 + (lvl - 1) / 3, 3);
+        public override float GetCastTime(CombatEntity source, CombatEntity? target, Position position, int lvl) => 0f;
+        public override int GetSkillRange(CombatEntity source, int lvl) => 5;
 
         public override SkillValidationResult ValidateTarget(CombatEntity source, CombatEntity? target, Position position, int lvl,
             bool isIndirect, bool isItemSource)
@@ -21,70 +21,53 @@ namespace RoRebuildServer.Simulation.Skills.SkillHandlers.Knight
             if (!isIndirect && source.Character.Type == CharacterType.Player && (source.Player.MainWeaponClass < (int)WeaponClass.Spear || source.Player.MainWeaponClass > (int)WeaponClass.TwoHandSpear))
                 return SkillValidationResult.IncorrectWeapon; //spear only
 
+            if (!isIndirect && source.Character.Type == CharacterType.Player && !source.Player.HasPeco)
+                return SkillValidationResult.Failure; //must be mounted on a Peco Peco
+
             return base.ValidateTarget(source, target, position, lvl, isIndirect, isItemSource);
-        }
-
-        private float GetDamageForDistanceAndLevel(int distance, int lvl)
-        {
-            var baseAtk = 1f + 0.2f * lvl;
-            var distRank = (lvl - 1) / 3;
-            var distScore = distRank - int.Max(0, distance - 1);
-
-            return baseAtk + distScore switch
-            {
-                3 => 1f + 0.162f * lvl,
-                2 => 0.75f + 0.15f * lvl,
-                1 => 0.5f + 0.1f * lvl,
-                _ => 0f
-            };
         }
 
         public override void Process(CombatEntity source, CombatEntity? target, Position position, int lvl, bool isIndirect, bool isItemSource)
         {
-            lvl = lvl.Clamp(1, 10);
+            lvl = lvl.Clamp(1, 1);
             var map = source.Character.Map;
 
             if (target == null || !target.IsValidTarget(source) || map == null)
                 return;
 
-            var srcPoint = source.Character.Position;
-            var endPoint = target.Character.Position;
-            var dist = (int)srcPoint.FloatDistance(endPoint);
-            var aoeLength = 2 + (lvl - 1) / 3;
+            var hasMomentum = source.HasStatusEffectOfType(CharacterStatusEffect.Momentum);
+            var aoeDistance = hasMomentum ? 4 : 2; //5x5 around target, or 9x9 with Momentum
+
+            source.Character.FaceTargetWithoutClientUpdate(target.Character);
 
             using var potentialTargets = EntityListPool.Get();
-            var area = Area.CreateAroundTwoPoints(srcPoint, endPoint, 7 - dist);
-            map.GatherEnemiesInArea(source.Character, area, potentialTargets, true, true);
+            map.GatherEnemiesInArea(source.Character, target.Character.Position, aoeDistance, potentialTargets, true, true);
+
+            if (hasMomentum)
+                source.StatusContainer!.RemoveStatusEffectOfType(CharacterStatusEffect.Momentum);
+
             map.AddVisiblePlayersAsPacketRecipients(source.Character, target.Character);
 
-            source.Character.FaceTargetWithoutClientUpdate(target.Character); //if one of our targets later is stacked this will make us knock them in the right direction
-            source.ApplyCooldownForSupportSkillAction();
-
-            var castInfo = DamageInfo.EmptyResult(source.Entity, target.Entity);
-            CommandBuilder.SkillExecuteTargetedSkill(source.Character, target.Character, CharacterSkill.BrandishSpear, lvl, castInfo);
+            var primaryResult = DamageInfo.EmptyResult(source.Entity, target.Entity);
 
             foreach (var potentialTarget in potentialTargets)
             {
                 if (!potentialTarget.TryGet<CombatEntity>(out var splashTarget))
                     continue;
 
-                var (isHit, distance) = MathHelper.IsPointInLinePathWithProjectedDistance(srcPoint, endPoint, splashTarget.Character.Position, aoeLength, 2.6f);
-
-                if (!isHit)
-                    continue;
-
-                var attackMultiplier = GetDamageForDistanceAndLevel((int)distance, lvl);
-
-                var req = new AttackRequest(CharacterSkill.BrandishSpear, attackMultiplier, 1, AttackFlags.Physical, AttackElement.None);
+                var req = new AttackRequest(CharacterSkill.BrandishSpear, 7.0f, 1, AttackFlags.Physical, AttackElement.None);
                 var res = source.CalculateCombatResult(splashTarget, req);
-                res.KnockBack = 2;
-                res.IsIndirect = true;
-                if (splashTarget.Character.Position == source.Character.Position)
-                    res.AttackPosition = source.Character.Position - Directions.GetVectorForDirection(source.Character.FacingDirection); //if we're stacked knock back in view direction
+                if (splashTarget == target)
+                    primaryResult = res;
                 source.ExecuteCombatResult(res, false);
 
                 CommandBuilder.AttackMulti(source.Character, splashTarget.Character, res, false);
             }
+
+            CommandBuilder.SkillExecuteTargetedSkill(source.Character, target.Character, CharacterSkill.BrandishSpear, 1, primaryResult);
+
+            if (source.Character.Type == CharacterType.Player)
+                source.Player.SetSkillSpecificCooldown(CharacterSkill.BrandishSpear, 3f);
 
             CommandBuilder.ClearRecipients();
         }

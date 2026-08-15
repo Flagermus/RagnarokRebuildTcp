@@ -316,6 +316,12 @@ Cast time scales from 0.1s to 0.5s, and damage from 100% to 500%, depending on t
 Skill Range: 14 tiles
 Recast time: 5s
 
+::BrandishSpear
+Swings the equipped spear forward, dealing 700% ATK physical damage to all enemies in a 5x5 area around the target.
+Consuming Momentum expands the area to 9x9.
+Requires a spear equipped and Peco Peco mounted.
+Cost: 20 SP. Cooldown: 3s.
+
 ::Pierce
 Thrusts your spear into a single target 3 times, each hit dealing 150% ATK physical damage (450% total).
 Consuming Momentum increases total damage by 50%.

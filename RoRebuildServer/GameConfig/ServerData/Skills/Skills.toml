@@ -319,9 +319,11 @@ Params = []
 Name = "Brandish Spear"
 Icon = "kn_brandishspear"
 Target = "Enemy"
-MaxLevel = 10
-SpCost = [12,12,12,12,12,12,12,12,12,12]
+MaxLevel = 1
+SpCost = [20]
 InterruptMode = "NoInterrupt"
+DescEn = """Swings the equipped spear forward, dealing 700% ATK physical damage to all enemies in a 5x5 area around the target. Consuming Momentum expands the area to 9x9.<br><br>Requires a spear equipped and Peco Peco mounted. Cost: 20 SP. Cooldown: 3s."""
+Params = []
 
 [SpearBoomerang]
 Name = "Spear Boomerang"

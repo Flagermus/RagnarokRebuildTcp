@@ -105,8 +105,6 @@ public class SpearStabHandler : SkillHandlerBase
             }
         }
 
-        source.ApplyCooldownForAttackAction(target);
-
         if (source.Character.Type == CharacterType.Player)
             source.Player.SetSkillSpecificCooldown(CharacterSkill.SpearStab, 3f);
 
